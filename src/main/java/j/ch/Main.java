@@ -19,7 +19,7 @@ public class Main implements Logmy,ItemListener<String>{
         list.addItemListener(this, true);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Main me = new Main();
         list.add("hello");
         new File().upsql();

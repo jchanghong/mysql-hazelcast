@@ -11,6 +11,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="mysql-hazelcast_main" />
     <orderEntry type="library" name="Gradle: com.hazelcast:hazelcast:3.7.2" level="project" />
+    <orderEntry type="library" name="Gradle: mysql:mysql-connector-java:5.1.6" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="mysql-hazelcast_main" />
 </module>
