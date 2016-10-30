@@ -6,29 +6,46 @@ import com.hazelcast.core.*;
 /**
  * Created by jiang on 2016/10/30 0030.
  */
-public class Main implements Logmy{
+public class Main implements Logmy,ItemListener<String>{
+    public static HazelcastInstance hazelcast = null;
+    public static IList<String> list = null;
+    static {
+        Config config = new Config();
+        hazelcast = Hazelcast.newHazelcastInstance(config);
+        list = hazelcast.getList("list");
+    }
+
+    public Main() {
+        list.addItemListener(this, true);
+    }
+
     public static void main(String[] args) {
         Main me = new Main();
-        Config config = new Config();
-
-        HazelcastInstance hazelcast = Hazelcast.newHazelcastInstance(config);
-        IList list = hazelcast.getList("list");
-        ItemListener lis11=new ItemListener() {
-            @Override
-            public void itemAdded(ItemEvent item) {
-                me.log("itemadd "+item.getItem()+"from:"+item.getMember().toString());
-                me.log(String.valueOf(item.getMember()==hazelcast.getCluster().getLocalMember()));
-            }
-
-            @Override
-            public void itemRemoved(ItemEvent item) {
-                me.log("itemadd "+item.getItem()+"from:"+item.getMember().toString());
-            }
-        };
-        list.addItemListener(lis11, true);
         list.add("hello");
+        new File().upsql();
 
 
+    }
+
+    /**
+     * Invoked when an item is added.
+     *
+     * @param item the added item
+     */
+    @Override
+    public void itemAdded(ItemEvent<String> item) {
+        log("itemadd " + item.getItem() + "from:" + item.getMember().toString());
+        log(String.valueOf(item.getMember() == hazelcast.getCluster().getLocalMember()));
+    }
+
+    /**
+     * Invoked when an item is removed.
+     *
+     * @param item the removed item.
+     */
+    @Override
+    public void itemRemoved(ItemEvent<String> item) {
+        log("itemadd " + item.getItem() + "from:" + item.getMember().toString());
     }
 }
 
